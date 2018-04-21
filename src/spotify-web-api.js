@@ -1,8 +1,8 @@
 'use strict';
 
 var AuthenticationRequest = require('./authentication-request'),
-    WebApiRequest = require('./webapi-request'),
-    HttpManager = require('./http-manager');
+  WebApiRequest = require('./webapi-request'),
+  HttpManager = require('./http-manager');
 
 function SpotifyWebApi(credentials) {
   this._credentials = credentials || {};
@@ -10,7 +10,7 @@ function SpotifyWebApi(credentials) {
 
 SpotifyWebApi.prototype = {
 
-  setCredentials: function(credentials) {
+  setCredentials: function (credentials) {
     for (var key in credentials) {
       if (credentials.hasOwnProperty(key)) {
         this._credentials[key] = credentials[key];
@@ -18,80 +18,80 @@ SpotifyWebApi.prototype = {
     }
   },
 
-  getCredentials: function() {
+  getCredentials: function () {
     return this._credentials;
   },
 
-  resetCredentials: function() {
+  resetCredentials: function () {
     this._credentials = null;
   },
 
-  setClientId: function(clientId) {
+  setClientId: function (clientId) {
     this._setCredential('clientId', clientId);
   },
 
-  setClientSecret: function(clientSecret) {
+  setClientSecret: function (clientSecret) {
     this._setCredential('clientSecret', clientSecret);
   },
 
-  setAccessToken: function(accessToken) {
+  setAccessToken: function (accessToken) {
     this._setCredential('accessToken', accessToken);
   },
 
-  setRefreshToken: function(refreshToken) {
+  setRefreshToken: function (refreshToken) {
     this._setCredential('refreshToken', refreshToken);
   },
 
-  setRedirectURI: function(redirectUri) {
+  setRedirectURI: function (redirectUri) {
     this._setCredential('redirectUri', redirectUri);
   },
 
-  getRedirectURI: function() {
+  getRedirectURI: function () {
     return this._getCredential('redirectUri');
   },
 
-  getClientId: function() {
+  getClientId: function () {
     return this._getCredential('clientId');
   },
 
-  getClientSecret: function() {
+  getClientSecret: function () {
     return this._getCredential('clientSecret');
   },
 
-  getAccessToken: function() {
+  getAccessToken: function () {
     return this._getCredential('accessToken');
   },
 
-  getRefreshToken: function() {
+  getRefreshToken: function () {
     return this._getCredential('refreshToken');
   },
 
-  resetClientId: function() {
+  resetClientId: function () {
     this._resetCredential('clientId');
   },
 
-  resetClientSecret: function() {
+  resetClientSecret: function () {
     this._resetCredential('clientSecret');
   },
 
-  resetAccessToken: function() {
+  resetAccessToken: function () {
     this._resetCredential('accessToken');
   },
 
-  resetRefreshToken: function() {
+  resetRefreshToken: function () {
     this._resetCredential('refreshToken');
   },
 
-  resetRedirectURI: function() {
+  resetRedirectURI: function () {
     this._resetCredential('redirectUri');
   },
 
-  _setCredential: function(credentialKey, value) {
+  _setCredential: function (credentialKey, value) {
     this._credentials = this._credentials || {};
     this._credentials[credentialKey] = value;
   },
 
-  _getCredential: function(credentialKey) {
+  _getCredential: function (credentialKey) {
     if (!this._credentials) {
       return;
     } else {
@@ -99,7 +99,7 @@ SpotifyWebApi.prototype = {
     }
   },
 
-  _resetCredential: function(credentialKey) {
+  _resetCredential: function (credentialKey) {
     if (!this._credentials) {
       return;
     } else {
@@ -116,8 +116,8 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the track. Not returned if a callback is given.
    */
-  getTrack: function(trackId, options, callback) {
-     // In case someone is using a version where options parameter did not exist.
+  getTrack: function (trackId, options, callback) {
+    // In case someone is using a version where options parameter did not exist.
     var actualCallback, actualOptions;
     if (typeof options === 'function' && !callback) {
       actualCallback = options;
@@ -143,7 +143,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artists. Not returned if a callback is given.
    */
-  getTracks: function(trackIds, options, callback) {
+  getTracks: function (trackIds, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback, actualOptions;
     if (typeof options === 'function' && !callback) {
@@ -157,7 +157,7 @@ SpotifyWebApi.prototype = {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/tracks')
       .withQueryParameters({
-        'ids' : trackIds.join(',')
+        'ids': trackIds.join(',')
       }, actualOptions)
       .build()
       .execute(HttpManager.get, actualCallback);
@@ -172,7 +172,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the album. Not returned if a callback is given.
    */
-  getAlbum: function(albumId, options, callback) {
+  getAlbum: function (albumId, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback, actualOptions;
     if (typeof options === 'function' && !callback) {
@@ -199,7 +199,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the albums. Not returned if a callback is given.
    */
-  getAlbums: function(albumIds, options, callback) {
+  getAlbums: function (albumIds, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback, actualOptions;
     if (typeof options === 'function' && !callback) {
@@ -213,7 +213,7 @@ SpotifyWebApi.prototype = {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums')
       .withQueryParameters({
-        'ids' : albumIds.join(',')
+        'ids': albumIds.join(',')
       }, actualOptions)
       .build()
       .execute(HttpManager.get, actualCallback);
@@ -227,7 +227,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artist. Not returned if a callback is given.
    */
-  getArtist: function(artistId, callback) {
+  getArtist: function (artistId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId)
       .build()
@@ -242,11 +242,11 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artists. Not returned if a callback is given.
    */
-  getArtists: function(artistIds, callback) {
+  getArtists: function (artistIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists')
       .withQueryParameters({
-        'ids' : artistIds.join(',')
+        'ids': artistIds.join(',')
       })
       .build()
       .execute(HttpManager.get, callback);
@@ -264,12 +264,12 @@ SpotifyWebApi.prototype = {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  search: function(query, types, options, callback) {
+  search: function (query, types, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/search/')
       .withQueryParameters({
-        type : types.join(','),
-        q : query
+        type: types.join(','),
+        q: query
       }, options)
       .build()
       .execute(HttpManager.get, callback);
@@ -285,7 +285,7 @@ SpotifyWebApi.prototype = {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  searchAlbums: function(query, options, callback) {
+  searchAlbums: function (query, options, callback) {
     return this.search(query, ['album'], options, callback);
   },
 
@@ -299,7 +299,7 @@ SpotifyWebApi.prototype = {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  searchArtists: function(query, options, callback) {
+  searchArtists: function (query, options, callback) {
     return this.search(query, ['artist'], options, callback);
   },
 
@@ -313,7 +313,7 @@ SpotifyWebApi.prototype = {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  searchTracks: function(query, options, callback) {
+  searchTracks: function (query, options, callback) {
     return this.search(query, ['track'], options, callback);
   },
 
@@ -327,7 +327,7 @@ SpotifyWebApi.prototype = {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  searchPlaylists: function(query, options, callback) {
+  searchPlaylists: function (query, options, callback) {
     return this.search(query, ['playlist'], options, callback);
   },
 
@@ -341,7 +341,7 @@ SpotifyWebApi.prototype = {
    *          for the given artist. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  getArtistAlbums: function(artistId, options, callback) {
+  getArtistAlbums: function (artistId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/albums')
       .withQueryParameters(options)
@@ -359,7 +359,7 @@ SpotifyWebApi.prototype = {
    *                    tracks in the album. The result is paginated. If the promise is rejected.
    *                    it contains an error object. Not returned if a callback is given.
    */
-  getAlbumTracks: function(albumId, options, callback) {
+  getAlbumTracks: function (albumId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums/' + albumId + '/tracks')
       .withQueryParameters(options)
@@ -377,11 +377,11 @@ SpotifyWebApi.prototype = {
    *          artist's top tracks in the given country. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  getArtistTopTracks: function(artistId, country, callback) {
+  getArtistTopTracks: function (artistId, country, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/top-tracks')
       .withQueryParameters({
-        'country' : country
+        'country': country
       })
       .build()
       .execute(HttpManager.get, callback);
@@ -395,7 +395,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing the
    *          related artists. If the promise is rejected, it contains an error object. Not returned if a callback is given.
    */
-  getArtistRelatedArtists: function(artistId, callback) {
+  getArtistRelatedArtists: function (artistId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/related-artists')
       .build()
@@ -411,7 +411,7 @@ SpotifyWebApi.prototype = {
    *          containing information about the user. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  getUser: function(userId, callback) {
+  getUser: function (userId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId))
       .build()
@@ -427,7 +427,7 @@ SpotifyWebApi.prototype = {
    *          depends on the permissions given by the user. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  getMe: function(callback) {
+  getMe: function (callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me')
       .build()
@@ -445,7 +445,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  getUserPlaylists: function(userId, options, callback) {
+  getUserPlaylists: function (userId, options, callback) {
     var path;
     if (typeof userId === 'string') {
       path = '/v1/users/' + encodeURIComponent(userId) + '/playlists';
@@ -470,7 +470,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  getPlaylist: function(userId, playlistId, options, callback) {
+  getPlaylist: function (userId, playlistId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
       .withQueryParameters(options)
@@ -488,7 +488,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object that containing
    * the tracks in the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  getPlaylistTracks: function(userId, playlistId, options, callback) {
+  getPlaylistTracks: function (userId, playlistId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
       .withQueryParameters(options)
@@ -506,7 +506,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing information about the
    *          created playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  createPlaylist: function(userId, playlistName, options, callback) {
+  createPlaylist: function (userId, playlistName, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function' && !callback) {
@@ -515,16 +515,16 @@ SpotifyWebApi.prototype = {
       actualCallback = callback;
     }
 
-    var actualOptions = { 'name' : playlistName };
+    var actualOptions = { 'name': playlistName };
     if (typeof options === 'object') {
-      Object.keys(options).forEach(function(key) {
+      Object.keys(options).forEach(function (key) {
         actualOptions[key] = options[key];
       });
     }
 
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(actualOptions)
       .build()
       .execute(HttpManager.post, actualCallback);
@@ -539,10 +539,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  followPlaylist: function(userId, playlistId, options, callback) {
+  followPlaylist: function (userId, playlistId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(options)
       .build()
       .execute(HttpManager.put, callback);
@@ -557,10 +557,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  unfollowPlaylist: function(userId, playlistId, callback) {
+  unfollowPlaylist: function (userId, playlistId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.del, callback);
 
@@ -576,10 +576,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  changePlaylistDetails: function(userId, playlistId, options, callback) {
+  changePlaylistDetails: function (userId, playlistId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(options)
       .build()
       .execute(HttpManager.put, callback);
@@ -595,10 +595,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  uploadCustomPlaylistCoverImage: function(userId, playlistId, base64URI, callback) {
+  uploadCustomPlaylistCoverImage: function (userId, playlistId, base64URI, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/images')
-      .withHeaders({ 'Content-Type' : 'image/jpeg' })
+      .withHeaders({ 'Content-Type': 'image/jpeg' })
       .withBodyParameters(base64URI)
       .build()
       .execute(HttpManager.put, callback);
@@ -616,10 +616,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  addTracksToPlaylist: function(userId, playlistId, tracks, options, callback) {
+  addTracksToPlaylist: function (userId, playlistId, tracks, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(options)
       .withBodyParameters({
         uris: tracks
@@ -639,10 +639,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  removeTracksFromPlaylist: function(userId, playlistId, tracks, options, callback) {
+  removeTracksFromPlaylist: function (userId, playlistId, tracks, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
         'tracks': tracks
       }, options)
@@ -661,13 +661,13 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  removeTracksFromPlaylistByPosition: function(userId, playlistId, positions, snapshotId, callback) {
+  removeTracksFromPlaylistByPosition: function (userId, playlistId, positions, snapshotId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
         'positions': positions,
-        'snapshot_id' : snapshotId
+        'snapshot_id': snapshotId
       })
       .build()
       .execute(HttpManager.del, callback);
@@ -683,10 +683,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  replaceTracksInPlaylist: function(userId, playlistId, uris, callback) {
+  replaceTracksInPlaylist: function (userId, playlistId, uris, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
         'uris': uris
       })
@@ -705,13 +705,13 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  reorderTracksInPlaylist: function(userId, playlistId, rangeStart, insertBefore, options, callback) {
+  reorderTracksInPlaylist: function (userId, playlistId, rangeStart, insertBefore, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
         'range_start': rangeStart,
-        'insert_before' : insertBefore
+        'insert_before': insertBefore
       }, options)
       .build()
       .execute(HttpManager.put, callback);
@@ -726,7 +726,7 @@ SpotifyWebApi.prototype = {
    *          containing information about the audio features. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  getAudioFeaturesForTrack: function(trackId, callback) {
+  getAudioFeaturesForTrack: function (trackId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features/' + trackId)
       .build()
@@ -742,7 +742,7 @@ SpotifyWebApi.prototype = {
    *          containing information about the audio analysis. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  getAudioAnalysisForTrack: function(trackId, callback) {
+  getAudioAnalysisForTrack: function (trackId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-analysis/' + trackId)
       .build()
@@ -758,11 +758,11 @@ SpotifyWebApi.prototype = {
    *          containing information about the audio features for the tracks. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  getAudioFeaturesForTracks: function(trackIds, callback) {
+  getAudioFeaturesForTracks: function (trackIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features')
       .withQueryParameters({
-        'ids' : trackIds.join(',')
+        'ids': trackIds.join(',')
       })
       .build()
       .execute(HttpManager.get, callback);
@@ -776,7 +776,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          a list of tracks and a list of seeds. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  getRecommendations: function(options, callback) {
+  getRecommendations: function (options, callback) {
     var _opts = {};
     var optionsOfTypeArray = ['seed_artists', 'seed_genres', 'seed_tracks'];
     for (var option in options) {
@@ -805,7 +805,7 @@ SpotifyWebApi.prototype = {
    *          a list of available genres to be used as seeds for recommendations.
    *          If rejected, it contains an error object. Not returned if a callback is given.
    */
-  getAvailableGenreSeeds: function(callback) {
+  getAvailableGenreSeeds: function (callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/recommendations/available-genre-seeds')
       .build()
@@ -819,15 +819,15 @@ SpotifyWebApi.prototype = {
    * @param {boolean} showDialog A parameter that you can use to force the user to approve the app on each login rather than being automatically redirected.
    * @returns {string} The URL where the user can give application permissions.
    */
-  createAuthorizeURL: function(scopes, state, showDialog) {
+  createAuthorizeURL: function (scopes, state, showDialog) {
     return AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
-        'client_id' : this.getClientId(),
-        'response_type' : 'code',
-        'redirect_uri' : this.getRedirectURI(),
-        'scope' : scopes.join('%20'),
-        'state' : state,
+        'client_id': this.getClientId(),
+        'response_type': 'code',
+        'redirect_uri': this.getRedirectURI(),
+        'scope': scopes.join('%20'),
+        'state': state,
         'show_dialog': showDialog && !!showDialog
       })
       .build()
@@ -841,7 +841,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
    *          playlist track objects. Not returned if a callback is given.
    */
-  getMySavedTracks: function(options, callback) {
+  getMySavedTracks: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
       .withQueryParameters(options)
@@ -858,11 +858,11 @@ SpotifyWebApi.prototype = {
    * The boolean value of true indicates that the track is part of the user's library, otherwise false.
    * Not returned if a callback is given.
    */
-  containsMySavedTracks: function(trackIds, callback) {
+  containsMySavedTracks: function (trackIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks/contains')
       .withQueryParameters({
-        'ids' : trackIds.join(',')
+        'ids': trackIds.join(',')
       })
       .build()
       .execute(HttpManager.get, callback);
@@ -875,26 +875,26 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error.
    * Not returned if a callback is given.
    */
-  removeFromMySavedTracks: function(trackIds, callback) {
+  removeFromMySavedTracks: function (trackIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(trackIds)
       .build()
       .execute(HttpManager.del, callback);
 
   },
 
-   /**
-   * Add a track from the authenticated user's Your Music library.
-   * @param {string[]} trackIds The track IDs
-   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
-   */
-  addToMySavedTracks: function(trackIds, callback) {
+  /**
+  * Add a track from the authenticated user's Your Music library.
+  * @param {string[]} trackIds The track IDs
+  * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+  * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
+  */
+  addToMySavedTracks: function (trackIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(trackIds)
       .build()
       .execute(HttpManager.put, callback);
@@ -907,10 +907,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error.
    * Not returned if a callback is given.
    */
-  removeFromMySavedAlbums: function(albumIds, callback) {
+  removeFromMySavedAlbums: function (albumIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(albumIds)
       .build()
       .execute(HttpManager.del, callback);
@@ -923,10 +923,10 @@ SpotifyWebApi.prototype = {
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
    */
-  addToMySavedAlbums: function(albumIds, callback) {
+  addToMySavedAlbums: function (albumIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(albumIds)
       .build()
       .execute(HttpManager.put, callback);
@@ -939,7 +939,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
    *          playlist album objects. Not returned if a callback is given.
    */
-  getMySavedAlbums: function(options, callback) {
+  getMySavedAlbums: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
       .withQueryParameters(options)
@@ -956,11 +956,11 @@ SpotifyWebApi.prototype = {
    * The boolean value of true indicates that the album is part of the user's library, otherwise false.
    * Not returned if a callback is given.
    */
-  containsMySavedAlbums: function(albumIds, callback) {
+  containsMySavedAlbums: function (albumId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums/contains')
       .withQueryParameters({
-        'ids' : albumIds.join(',')
+        'ids': albumId
       })
       .build()
       .execute(HttpManager.get, callback);
@@ -973,7 +973,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of artists,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyTopArtists: function(options, callback) {
+  getMyTopArtists: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/top/artists')
       .withQueryParameters(options)
@@ -988,7 +988,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyTopTracks: function(options, callback) {
+  getMyTopTracks: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/top/tracks')
       .withQueryParameters(options)
@@ -1003,7 +1003,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyRecentlyPlayedTracks: function(options, callback) {
+  getMyRecentlyPlayedTracks: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/recently-played')
       .withQueryParameters(options)
@@ -1017,7 +1017,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyDevices: function(callback) {
+  getMyDevices: function (callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/devices')
       .build()
@@ -1032,7 +1032,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyCurrentPlayingTrack: function(options, callback) {
+  getMyCurrentPlayingTrack: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/currently-playing')
       .withQueryParameters(options)
@@ -1047,7 +1047,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyCurrentPlaybackState: function(options, callback) {
+  getMyCurrentPlaybackState: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player')
       .withQueryParameters(options)
@@ -1062,10 +1062,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  transferMyPlayback: function(options, callback) {
+  transferMyPlayback: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
         'device_ids': options.deviceIds,
         'play': !!options.play
@@ -1082,12 +1082,12 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  play: function(options, callback) {
+  play: function (options, callback) {
     /*jshint camelcase: false */
     var _options = options || {};
-    var queryParams = _options.device_id ? {device_id: _options.device_id} : null;
+    var queryParams = _options.device_id ? { device_id: _options.device_id } : null;
     var postData = {};
-    ['context_uri', 'uris', 'offset'].forEach(function(field) {
+    ['context_uri', 'uris', 'offset'].forEach(function (field) {
       if (field in _options) {
         postData[field] = _options[field];
       }
@@ -1095,7 +1095,7 @@ SpotifyWebApi.prototype = {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/play')
       .withQueryParameters(queryParams)
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters(postData)
       .build()
       .execute(HttpManager.put, callback);
@@ -1109,12 +1109,12 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  pause: function(options, callback) {
+  pause: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/pause')
       /*jshint camelcase: false */
-      .withQueryParameters(options && options.device_id ? {device_id: options.device_id} : null)
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(options && options.device_id ? { device_id: options.device_id } : null)
+      .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.put, callback);
   },
@@ -1126,10 +1126,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToPrevious: function(callback) {
+  skipToPrevious: function (callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/previous')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.post, callback);
   },
@@ -1141,10 +1141,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToNext: function(callback) {
+  skipToNext: function (callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/next')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.post, callback);
   },
@@ -1157,7 +1157,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  setRepeat: function(options, callback) {
+  setRepeat: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/repeat')
       .withQueryParameters({
@@ -1175,7 +1175,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  setShuffle: function(options, callback) {
+  setShuffle: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/shuffle')
       .withQueryParameters({
@@ -1193,7 +1193,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  followUsers: function(userIds, callback) {
+  followUsers: function (userIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1212,7 +1212,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  followArtists: function(artistIds, callback) {
+  followArtists: function (artistIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1231,7 +1231,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  unfollowUsers: function(userIds, callback) {
+  unfollowUsers: function (userIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1251,7 +1251,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  unfollowArtists: function(artistIds, callback) {
+  unfollowArtists: function (artistIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1273,7 +1273,7 @@ SpotifyWebApi.prototype = {
    *          The boolean value of true indicates that the user is following that user, otherwise is not.
    *          Not returned if a callback is given.
    */
-  isFollowingUsers: function(userIds, callback) {
+  isFollowingUsers: function (userIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following/contains')
       .withQueryParameters({
@@ -1291,12 +1291,12 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
    * album objects. Not returned if a callback is given.
    */
-  getFollowedArtists: function(options, callback) {
+  getFollowedArtists: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters({
-        type : 'artist'
+        type: 'artist'
       }, options)
       .build()
       .execute(HttpManager.get, callback);
@@ -1311,11 +1311,11 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns an array of booleans. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  areFollowingPlaylist: function(userId, playlistId, followerIds, callback) {
+  areFollowingPlaylist: function (userId, playlistId, followerIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers/contains')
       .withQueryParameters({
-        ids : followerIds.join(',')
+        ids: followerIds.join(',')
       })
       .build()
       .execute(HttpManager.get, callback);
@@ -1331,7 +1331,7 @@ SpotifyWebApi.prototype = {
    *          The boolean value of true indicates that the user is following that artist, otherwise is not.
    *          Not returned if a callback is given.
    */
-  isFollowingArtists: function(artistIds, callback) {
+  isFollowingArtists: function (artistIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following/contains')
       .withQueryParameters({
@@ -1349,10 +1349,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
    * album objects. Not returned if a callback is given.
    */
-  getNewReleases: function(options, callback) {
+  getNewReleases: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/new-releases')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);
@@ -1365,10 +1365,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
    * featured playlists. Not returned if a callback is given.
    */
-  getFeaturedPlaylists: function(options, callback) {
+  getFeaturedPlaylists: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/featured-playlists')
-      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);
@@ -1381,7 +1381,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object of categories.
    * Not returned if a callback is given.
    */
-  getCategories: function(options, callback) {
+  getCategories: function (options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories')
       .withQueryParameters(options)
@@ -1397,7 +1397,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a category object.
    * Not returned if a callback is given.
    */
-  getCategory: function(categoryId, options, callback) {
+  getCategory: function (categoryId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories/' + categoryId)
       .withQueryParameters(options)
@@ -1413,7 +1413,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves to a paging object containing simple playlists.
    * Not returned if a callback is given.
    */
-  getPlaylistsForCategory: function(categoryId, options, callback) {
+  getPlaylistsForCategory: function (categoryId, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories/' + categoryId + '/playlists')
       .withQueryParameters(options)
@@ -1422,7 +1422,7 @@ SpotifyWebApi.prototype = {
   }
 };
 
-SpotifyWebApi._addMethods = function(methods) {
+SpotifyWebApi._addMethods = function (methods) {
   for (var i in methods) {
     if (methods.hasOwnProperty(i)) {
       this.prototype[i] = methods[i];
